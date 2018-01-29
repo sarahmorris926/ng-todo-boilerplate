@@ -2,7 +2,6 @@
 
 angular.module("TodoApp", ["ngRoute"])
 .config( ($routeProvider) => {
-  // TODO: add controllers
   $routeProvider
   .when('/items/list', {
     templateUrl: "partials/item-list.html",
