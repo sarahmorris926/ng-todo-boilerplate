@@ -2,9 +2,9 @@
 
 angular.module("TodoApp").controller("ItemDetailCtrl", function($scope, ItemFactory, $routeParams) {
 
-  let todoItems = ItemFactory.getTodoItems();
-
-  $scope.selectedItem = todoItems.find( (item) => {
-    return item.id === +$routeParams.id;
+  let todoItems = ItemFactory.getTodoItem($routeParams.id)
+  .then( (item) => {
+    $scope.selectedItem = item;
   });
+
 });
