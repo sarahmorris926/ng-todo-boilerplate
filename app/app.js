@@ -5,6 +5,10 @@ angular
   .constant("FBUrl", "https://ng-todo-8ccff.firebaseio.com/")
   .config($routeProvider => {
     $routeProvider
+      .when("/login", {
+        templateUrl: "partials/user-form.html",
+        controller: "LoginCtrl"
+      })
       .when("/items/list", {
         templateUrl: "partials/item-list.html",
         controller: "ItemListCtrl"
