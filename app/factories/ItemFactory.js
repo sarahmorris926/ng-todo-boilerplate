@@ -1,6 +1,7 @@
 "use strict";
 
 angular.module("TodoApp").factory("ItemFactory", (FBUrl, $http, $q) => {
+
   function getTodoItems() {
     return $q((resolve, reject) => {
       $http
@@ -15,22 +16,22 @@ angular.module("TodoApp").factory("ItemFactory", (FBUrl, $http, $q) => {
           });
           console.log("taskArr", taskArr);
           resolve(taskArr);
-        })
-        // The above works the same as this, but without having to set an explicit var for tasks.data
-        // .then(tasks => {
-        //   console.log("tasks", tasks);
-        //   let taskData = tasks.data;
-        //   let taskArr = Object.keys(taskData).map(taskKey => {
-        //     console.log("taskKey", taskKey);
-        //     taskData[taskKey].id = taskKey;
-        //     return taskData[taskKey];
-        //   });
-        //   console.log("taskArr", taskArr);
-        //   resolve(taskArr);
-        // })
-        .catch(err => {
-          reject(err);
         });
+      // The above works the same as this, but without having to set an explicit var for tasks.data
+      // .then(tasks => {
+      //   console.log("tasks", tasks);
+      //   let taskData = tasks.data;
+      //   let taskArr = Object.keys(taskData).map(taskKey => {
+      //     console.log("taskKey", taskKey);
+      //     taskData[taskKey].id = taskKey;
+      //     return taskData[taskKey];
+      //   });
+      //   console.log("taskArr", taskArr);
+      //   resolve(taskArr);
+      // })
+      // .catch(err => {
+      //   reject(err);
+      // });
     });
   }
 
@@ -55,8 +56,23 @@ angular.module("TodoApp").factory("ItemFactory", (FBUrl, $http, $q) => {
     return $q((resolve, reject) => {
       $http
         .get(`${FBUrl}/items/${todoItemId}.json`)
-        .then((item) => {
+        .then(item => {
           resolve(item.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
+  function updateItem(todoItem, itemId) {
+    return $q((resolve, reject) => {
+      $http
+        .put(`${FBUrl}/items/${itemId}.json`,
+        JSON.stringify(todoItem)
+        )
+        .then((data) => {
+          resolve(data);
         })
         .catch(err => {
           reject(err);
@@ -77,5 +93,5 @@ angular.module("TodoApp").factory("ItemFactory", (FBUrl, $http, $q) => {
     });
   }
 
-  return { getTodoItems, getTodoItem, addNewItem, deleteItem };
+  return { getTodoItems, getTodoItem, addNewItem, updateItem, deleteItem };
 });
