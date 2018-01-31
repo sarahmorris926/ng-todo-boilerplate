@@ -14,6 +14,7 @@ angular.module("TodoApp").controller("ItemNewCtrl", function($scope, $location, 
 
   $scope.saveItem = () => {
     console.log('New Item to add', $scope.todoItem );
+    $scope.todoItem.uid = firebase.auth().currentUser.uid;
     ItemFactory.addNewItem($scope.todoItem)
     .then( (data) => {
       $location.url("/items/list");

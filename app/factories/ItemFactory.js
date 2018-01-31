@@ -5,7 +5,7 @@ angular.module("TodoApp").factory("ItemFactory", (FBUrl, $http, $q) => {
   function getTodoItems() {
     return $q((resolve, reject) => {
       $http
-        .get(`${FBUrl}/items.json`)
+        .get(`${FBUrl}/items.json?orderBy="uid"&equalTo="${firebase.auth().currentUser.uid}"`)
         // {data} is syntax for destructuring! It's cool. New to ES6. Get used to it. We will use a lot in Node
         .then(({ data }) => {
           console.log("tasks", data);
